@@ -18,5 +18,5 @@ from django.contrib import admin
 from django.urls import path,include
 
 urlpatterns = [
-    path('taskManager',include('taskManager.urls'))
+    path('taskManager/',include('taskManager.urls'))
 ]
