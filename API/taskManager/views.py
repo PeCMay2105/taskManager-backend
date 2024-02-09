@@ -19,12 +19,12 @@ def Tasks(request):
     if request.method == 'GET':
         try:
             tarefas = Task.objects.all()
-            lista_tarefas = list(tarefas.values)
+            lista_tarefas = list(tarefas.values())
             lista_serializada = taskSerializer(lista_tarefas, many=True)
             return Response(lista_serializada.data)
         except Exception as excecao:
-            print("aaaaaaaaaaaa")
-            return Response("Não foi possível retornar as tarefas: ",excecao)
+            print("Ocorreu um erro: ",excecao)
+            return Response(500)
     elif request.method == 'POST':
         try :
             nova_tarefa = taskSerializer(data=request.data)
