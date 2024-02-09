@@ -51,14 +51,24 @@ def Tasks(request):
     elif request.method == "PUT":
         try:
             tarefa_to_update = Task.objects.get(id=request.data['id'])
-            tarefa_to_update_serialized = taskSerializer(tarefa_to_update, data=request.data)
-            
+            titulo_tarefa = tarefa_to_update.title
+            id_tarefa = tarefa_to_update.id
+            data_to_update ={
+                'id':request.data['id'],
+                'title':titulo_tarefa,
+                'completed':request.data['completed']
+            }
+
+            tarefa_to_update_serialized = taskSerializer(tarefa_to_update,data=data_to_update)
+
             if tarefa_to_update_serialized.is_valid():
                 tarefa_to_update_serialized.save()
                 print("Tarefa Atualizada")
                 return Response(200)
-                
-
+            else:
+                print(request.data)
+                print("Os dados inseridos são inválidos")
+                return Response(400)
         except Exception as e:
-            print("Ocorreu um erro: ",e)
+            print("Ocorreu um erro: ", e)
             return Response(500)
